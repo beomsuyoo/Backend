@@ -1,9 +1,12 @@
 package com.example.simpleboard.post.service;
 
+import com.example.simpleboard.board.db.BoardEntity;
+import com.example.simpleboard.board.db.BoardRepository;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.post.model.PostRequest;
 import com.example.simpleboard.post.model.ViewRequest;
+import com.example.simpleboard.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+//    private final ReplyService replyService;
+    private final BoardRepository boardRepository;
+
+
     public PostEntity save(
             PostRequest postRequest
     ){
+        var boardEntity = boardRepository.findById(postRequest.getBoardId()).get();
         var request = PostEntity.builder()
-                .boardId(1L)//대기
+                .board(boardEntity)//대기
                 .userName(postRequest.getUserName())
                 .password(postRequest.getPassword())
                 .email(postRequest.getEmail())
@@ -39,6 +47,9 @@ public class PostService {
                         String format = "Password does not match %s vs %s";
                         throw new RuntimeException(String.format(format,viewRequest.getPassword(),it.getPassword()));
                     }
+
+//                    var replyList = replyService.findAllByPostId(viewRequest.getPostId());
+//                    it.setReplyEntityList(replyList);
                     return it;
                 }).orElseThrow( // if null throw
                         ()-> new RuntimeException("The post does not exist : " + viewRequest.getPostId())
