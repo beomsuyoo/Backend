@@ -34,7 +34,7 @@ public class SecurityJpa {
                             ).permitAll() // permit swagger
 
                             .mvcMatchers(
-                                    "/open-api.**"
+                                    "/open-api/**"
                             ).permitAll() // permit open-api
 
                             .anyRequest().authenticated() // others authenticated
