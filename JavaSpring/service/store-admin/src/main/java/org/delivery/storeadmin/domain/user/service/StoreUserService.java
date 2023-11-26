@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +25,11 @@ public class StoreUserService {
         storeUserEntity.setPassword(passwordEncoder.encode(storeUserEntity.getPassword()));
         storeUserEntity.setRegisteredAt(LocalDateTime.now());
 
-        storeUserRepository.save(storeUserEntity);
+        return storeUserRepository.save(storeUserEntity);
+    }
+
+    public Optional<StoreUserEntity> getRegisterUser(String email){
+        return storeUserRepository.findFirstByEmailAndStatusOrderByIdDesc(email, StoreUserStatus.REGISTERED);
+
     }
 }
