@@ -11,6 +11,7 @@ import org.delivery.api.domain.userorder.model.UserOrderDetailResponse;
 import org.delivery.api.domain.userorder.model.UserOrderRequest;
 import org.delivery.api.domain.userorder.converter.UserOrderConverter;
 import org.delivery.api.domain.userorder.model.UserOrderResponse;
+import org.delivery.api.domain.userorder.producer.UserOrderProducer;
 import org.delivery.api.domain.userorder.service.UserOrderService;
 import org.delivery.api.domain.userordermenu.converter.UserOrderMenuConverter;
 import org.delivery.api.domain.userordermenu.service.UserOrderMenuService;
@@ -31,6 +32,7 @@ public class UserOrderBusiness {
     private final StoreService storeService;
     private final StoreMenuConverter storeMenuConverter;
     private final StoreConverter storeConverter;
+    private final UserOrderProducer userOrderProducer;
 
     /*
     1. userid, menuid
@@ -58,6 +60,8 @@ public class UserOrderBusiness {
         userOrderMenuEntityList.forEach(it->{
             userOrderMenuService.order(it);
         });
+
+        userOrderProducer.sendOrder(newUserOrderEntity);
 
         return userOrderConverter.toResponse(newUserOrderEntity);
 
