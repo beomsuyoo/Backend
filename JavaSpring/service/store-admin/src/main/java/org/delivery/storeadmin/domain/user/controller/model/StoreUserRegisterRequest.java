@@ -1,5 +1,6 @@
 package org.delivery.storeadmin.domain.user.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class StoreUserRegisterRequest {
     @NotBlank
-    private String storeName;
+    private String name;
 
     @NotBlank
     private String email;

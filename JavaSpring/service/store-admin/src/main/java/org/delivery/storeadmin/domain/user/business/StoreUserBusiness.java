@@ -4,6 +4,7 @@ package org.delivery.storeadmin.domain.user.business;
 import lombok.RequiredArgsConstructor;
 import org.delivery.db.store.StoreRepository;
 import org.delivery.db.store.enums.StoreStatus;
+import org.delivery.db.storeuser.StoreUserRepository;
 import org.delivery.storeadmin.domain.user.controller.model.StoreUserRegisterRequest;
 import org.delivery.storeadmin.domain.user.controller.model.StoreUserResponse;
 import org.delivery.storeadmin.domain.user.converter.StoreUserConverter;
@@ -20,7 +21,7 @@ public class StoreUserBusiness {
     public StoreUserResponse register(
             StoreUserRegisterRequest request
     ){
-        var storeEntity = storeRepository.findFirstByNameAndStatusOrderByIdDesc(request.getStoreName(), StoreStatus.REGISTERED);
+        var storeEntity = storeRepository.findFirstByNameAndStatusOrderByIdDesc(request.getName(), StoreStatus.REGISTERED);
 
         var entity = storeUserConverter.toEntity(request, storeEntity.get());
 

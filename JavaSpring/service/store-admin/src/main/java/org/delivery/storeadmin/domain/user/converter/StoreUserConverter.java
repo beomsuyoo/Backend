@@ -22,7 +22,6 @@ public class StoreUserConverter {
             StoreEntity storeEntity
     ){
 
-        var storeName = request.getStoreName();
         return StoreUserEntity.builder()
                 .storeId(storeEntity.getId())
                 .email(request.getEmail())
